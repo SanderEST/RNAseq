@@ -1,8 +1,8 @@
 # RNAseq
-Pipeline for RNAseq data processing. Pipeline is implemented by Sander Pajusalu, Lek Lab, Yale. 
+Pipeline for RNAseq data processing. Pipeline is implemented by Sander Pajusalu, Institute of Clinical Medicine, Tartu University. 
 
 # General comments
-The pipeline follows [gtex-TOPMed pipeline](https://github.com/broadinstitute/gtex-pipeline/blob/master/TOPMed_RNAseq_pipeline.md), but is optimized for Yale HPC, which uses slurm queueing system.
+The pipeline follows [gtex-TOPMed pipeline](https://github.com/broadinstitute/gtex-pipeline/blob/master/TOPMed_RNAseq_pipeline.md), but is optimized for UT HPC, which uses slurm queueing system.
 
 The python scripts are downloaded from [gtex github](https://github.com/broadinstitute/gtex-pipeline/tree/master/rnaseq/src), the RNA-SeQC was downloaded and setup as instructedf [here](https://github.com/broadinstitute/rnaseqc). The plot script was slightly modified to meet needs, for example metrics and expression databases are now output as csv files. 
 
@@ -25,25 +25,7 @@ cat gencode.vM22.genes.gtf | grep 'exon' | cut -f1,4,5 | sort -V -k1,1 -k2,2 > g
 
 # Modules
 
-The following modules were used on Ruddle cluster.
-```
- module load RSEM/1.3.0-foss-2016b
- module load STAR/2.7.1a-foss-2016b
- module load picard/2.9.0-Java-1.8.0_121
- module load Python/3.8.6-GCCcore-10.2.0
- module load SAMtools/1.9-foss-2016b
-```
-These were saved into module collection `star` by `module save star`.
-
-To be compatible with human references downloaded from gtex I have used the following versions:
-```
-module load RSEM/1.3.0-foss-2016b
-module load STAR/2.5.3a-foss-2016b
-module load picard/2.9.0-Java-1.8.0_121
-module load Python/3.8.6-GCCcore-10.2.0
-module load SAMtools/1.9-foss-2016b
-```
-These were saved into module collection `star` by `module save star253`.
+See launch script for modules.
 
 ## Python module dependencies
 
@@ -120,8 +102,8 @@ do
     tar zxf $filename
 done
 
-python /gpfs/ycga/project/lek/shared/tools/RNAseq/python_scripts/plot.py *_QC project_QC.ipynb
+python /path/to/python_scripts/plot.py *_QC project_QC.ipynb
 ```
 
 If you want to add cohorts to QC plots, then provide additional argument `-c cohorts.tsv`, where cohorts.tsv has two columns, sample ID and cohort.
-`python /gpfs/ycga/project/lek/shared/tools/RNAseq/python_scripts/plot.py -c cohorts.tsv *_QC project_QC.ipynb`
+`python /path/to/python_scripts/plot.py -c cohorts.tsv *_QC project_QC.ipynb`
